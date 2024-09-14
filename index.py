@@ -15,7 +15,11 @@ def index():
 
         try:
             html_resume = generate_html_resume_from_pdf(pdf_file, api_key)
-            return html_resume, 200, {'Content-Type': 'text/html'}
+            # return html_resume, 200, {'Content-Type': 'text/html'}
+            with open('resume.html', 'w') as f:
+                f.write(html_resume)
+
+            return send_file('resume.html', as_attachment=True)
         except Exception as e:
             return f"An error occurred: {str(e)}", 500
 
