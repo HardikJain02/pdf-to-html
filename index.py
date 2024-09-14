@@ -11,21 +11,28 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        pdf_file = request.files['pdf_file']
+        pdf_files = request.files.getlist('pdf_file')  
         api_key = request.form['api_key']
 
+        html_resumes = [] 
+
         try:
-            html_resume = generate_html_resume_from_pdf(pdf_file, api_key)
+            for pdf_file in pdf_files:
+                print(f"Processing file: {pdf_file.filename}")  
+                html_resume = generate_html_resume_from_pdf(pdf_file, api_key)
+                html_resumes.append(html_resume)
 
             if request.form['action'] == 'Generate HTML Resume':
-                return send_file(io.BytesIO(html_resume.encode('utf-8')), 
-                                 download_name='resume.html', 
+                combined_html = "\n".join(html_resumes)  
+                return send_file(io.BytesIO(combined_html.encode('utf-8')), 
+                                 download_name='resumes.html', 
                                  as_attachment=True, 
                                  mimetype='text/html')  
             elif request.form['action'] == 'View HTML Resume':
-                return html_resume, 200, {'Content-Type': 'text/html'}  
+                return "\n".join(html_resumes), 200, {'Content-Type': 'text/html'}  
 
         except Exception as e:
+            print(f"An error occurred: {str(e)}") 
             return f"An error occurred: {str(e)}", 500
 
     return render_template('index.html')
