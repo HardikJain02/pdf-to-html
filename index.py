@@ -17,7 +17,7 @@ def index():
         try:
             html_resume = generate_html_resume_from_pdf(pdf_file, api_key)
             return send_file(io.BytesIO(html_resume.encode('utf-8')), 
-                             attachment_filename='resume.html', 
+                             download_name='resume.html', 
                              as_attachment=True, 
                              mimetype='text/html')
         except Exception as e:
