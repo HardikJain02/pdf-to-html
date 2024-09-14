@@ -4,15 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LinkedIn to HTML Resume Converter</title>
+    <script>
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+    </script>
 </head>
 <body>
     <h1>LinkedIn to HTML Resume Converter</h1>
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" onsubmit="showLoading()">
         <label for="pdf_file">Upload LinkedIn PDF:</label>
         <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" required><br><br>
+        
         <label for="api_key">OpenAI API Key:</label>
         <input type="text" name="api_key" id="api_key" required><br><br>
-        <input type="submit" value="Generate HTML Resume">
+        
+        <input type="submit" name="action" value="Generate HTML Resume">
+        <input type="submit" name="action" value="View HTML Resume"> 
     </form>
+    
+    <div id="loading" style="display: none;">
+        <p>Loading... Please wait.</p>
+    </div>
 </body>
 </html>

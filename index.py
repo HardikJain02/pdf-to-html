@@ -16,10 +16,15 @@ def index():
 
         try:
             html_resume = generate_html_resume_from_pdf(pdf_file, api_key)
-            return send_file(io.BytesIO(html_resume.encode('utf-8')), 
-                             download_name='resume.html', 
-                             as_attachment=True, 
-                             mimetype='text/html')
+
+            if request.form['action'] == 'Generate HTML Resume':
+                return send_file(io.BytesIO(html_resume.encode('utf-8')), 
+                                 download_name='resume.html', 
+                                 as_attachment=True, 
+                                 mimetype='text/html')  
+            elif request.form['action'] == 'View HTML Resume':
+                return html_resume, 200, {'Content-Type': 'text/html'}  
+
         except Exception as e:
             return f"An error occurred: {str(e)}", 500
 
