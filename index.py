@@ -15,10 +15,7 @@ def index():
 
         try:
             html_resume = generate_html_resume_from_pdf(pdf_file, api_key)
-            with open('resume.html', 'w') as f:
-                f.write(html_resume)
-
-            return send_file('resume.html', as_attachment=True)
+            return html_resume, 200, {'Content-Type': 'text/html'}
         except Exception as e:
             return f"An error occurred: {str(e)}", 500
 
@@ -54,5 +51,5 @@ def generate_html_resume(text, api_key, max_retries=5, initial_retry_delay=1):
             retry_delay *= 2  
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT is not set
+    port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
