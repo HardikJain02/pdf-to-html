@@ -45,8 +45,8 @@ def generate_html_resume(text, api_key, max_retries=5, initial_retry_delay=1):
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo", 
                 messages=[
-                    {"role": "system", "content": "You are a helpful assistant that generates well-structured HTML resumes from given scraped LinkedIn profile information."},
-                    {"role": "user", "content": f"Generate a professional HTML resume based on the following LinkedIn profile information. Use appropriate HTML tags and CSS for styling. Ensure that links are clickable and keywords or headings are highlighted:\n\n{text}"}
+                    {"role": "system", "content": "You are an expert resume designer with deep knowledge of modern HTML, CSS, and best practices in web accessibility and responsive design, have worked with scraped LinkedIn profile information."},
+                    {"role": "user", "content": f"Generate a professional HTML resume based on the following LinkedIn profile information. Use appropriate HTML tags and CSS for styling:\n\n{text} \n\nPlease ensure the resume is:\n1. Well-structured with clear sections (e.g., Contact, Summary, Experience, Education, Skills)\n2. Properly indented for improved readability\n3. Styled with a clean, professional look\n4. Responsive and mobile-friendly\n5. Accessible, following WCAG guidelines\n\nInclude appropriate semantic HTML5 tags and add CSS for a modern, attractive design. Feel free to use FontAwesome icons for visual enhancement where appropriate."}
                 ],
                 max_tokens=1500
             )
