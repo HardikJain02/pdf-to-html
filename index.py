@@ -54,4 +54,5 @@ def generate_html_resume(text, api_key, max_retries=5, initial_retry_delay=1):
             retry_delay *= 2  
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT is not set
+    app.run(host='0.0.0.0', port=port)
